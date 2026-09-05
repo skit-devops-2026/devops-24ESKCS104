@@ -1,7 +1,8 @@
 pipeline {
     agent any
     options {
-        skipDefaultCheckout(false)
+        // FIXED: skipDefaultCheckout does not accept arguments
+        skipDefaultCheckout()
     }
     triggers {
         githubPush()
@@ -17,10 +18,11 @@ pipeline {
             }
         }
         stage('Install') {
-    steps {
-        // Changed from 'sh' to 'bat' for Windows compatibility
-        bat 'make install' 
-    }
-}
+            steps {
+                // FIXED: 'make' is a Linux command. Use 'sh' unless your Jenkins 
+                // agent is running directly on Windows and has a 'make' tool installed.
+                sh 'make install' 
+            }
+        }
     }
 }

@@ -17,11 +17,10 @@ pipeline {
             }
         }
         stage('Install') {
-            steps {
-                // Note: Since Jenkins is running on Windows, 'sh' might fail if a bash environment isn't set up.
-                // If it fails, change 'sh' to 'bat' like this: bat 'make install'
-                sh 'make install' 
-            }
-        }
+    steps {
+        // Changed from 'sh' to 'bat' for Windows compatibility
+        bat 'make install' 
+    }
+}
     }
 }

@@ -1,0 +1,11 @@
+# HELP interviewx_uptime_seconds Time since the server started.
+# TYPE interviewx_uptime_seconds gauge
+interviewx_uptime_seconds 1
+# HELP interviewx_http_requests_total Total HTTP requests by method and path.
+# TYPE interviewx_http_requests_total counter
+interviewx_http_requests_total{method="GET",path="/health"} 1
+interviewx_http_requests_total{method="GET",path="/"} 1
+interviewx_http_requests_total{method="GET",path="/metrics"} 2
+# HELP interviewx_resident_memory_bytes Resident memory used by the server process.
+# TYPE interviewx_resident_memory_bytes gauge
+interviewx_resident_memory_bytes 324562944

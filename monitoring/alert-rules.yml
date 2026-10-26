@@ -1,0 +1,20 @@
+groups:
+  - name: interviewx
+    rules:
+      - alert: BackendDown
+        expr: up{job="interviewx-backend"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "InterViewX backend is down"
+          description: "The interviewx-backend scrape target has been down for more than 1 minute."
+
+      - alert: BackendHighMemory
+        expr: interviewx_resident_memory_bytes > 500000000
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "InterViewX backend memory is high"
+          description: "Backend resident memory has been above 500 MB for more than 5 minutes."

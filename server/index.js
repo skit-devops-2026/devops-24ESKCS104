@@ -15,6 +15,7 @@ app.use(cors({
         "http://localhost:5173",
         "http://127.0.0.1:5173",
         "https://interviewiq-client-tbtt.onrender.com",
+        "https://interviewx-frontend-104.onrender.com",
     ],
     credentials:true
 }))

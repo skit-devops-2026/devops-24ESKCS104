@@ -1,0 +1,18 @@
+# Prometheus configuration for running Prometheus outside docker compose.
+# Run: prometheus --config.file=prometheus.yml
+# The backend must be running on localhost:6000 (see docker-compose.yml).
+global:
+  scrape_interval: 15s
+
+rule_files:
+  - monitoring/alert-rules.yml
+
+scrape_configs:
+  - job_name: interviewx-backend
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["localhost:6000"]
+
+  - job_name: prometheus
+    static_configs:
+      - targets: ["localhost:9090"]

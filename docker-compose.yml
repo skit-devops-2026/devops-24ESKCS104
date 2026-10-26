@@ -1,0 +1,58 @@
+services:
+  backend:
+    build:
+      context: ./server
+      args:
+        GIT_COMMIT: ${GIT_COMMIT:-dev}
+    image: interviewx-backend:local
+    container_name: interviewx-backend
+    environment:
+      NODE_ENV: production
+      PORT: 6000
+      GIT_COMMIT: ${GIT_COMMIT:-dev}
+    ports:
+      - "6000:6000"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:6000/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+
+  frontend:
+    build:
+      context: ./client
+    image: interviewx-frontend:local
+    container_name: interviewx-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: interviewx-prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./monitoring/alert-rules.yml:/etc/prometheus/alert-rules.yml:ro
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+    ports:
+      - "9090:9090"
+    depends_on:
+      - backend
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: interviewx-grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./monitoring/grafana-dashboard.json:/var/lib/grafana/dashboards/interviewx.json:ro
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus

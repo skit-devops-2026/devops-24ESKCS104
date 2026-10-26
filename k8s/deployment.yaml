@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: interviewx-backend
+  labels:
+    app: interviewx-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: interviewx-backend
+  template:
+    metadata:
+      labels:
+        app: interviewx-backend
+    spec:
+      containers:
+        - name: backend
+          image: ghcr.io/skit-devops-2026/devops-24eskcs104-backend:latest
+          ports:
+            - containerPort: 6000
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: PORT
+              value: "6000"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 6000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 6000
+            initialDelaySeconds: 20
+            periodSeconds: 20
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: interviewx-frontend
+  labels:
+    app: interviewx-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: interviewx-frontend
+  template:
+    metadata:
+      labels:
+        app: interviewx-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: ghcr.io/skit-devops-2026/devops-24eskcs104-frontend:latest
+          ports:
+            - containerPort: 80

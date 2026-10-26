@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: interviewx-backend
+  labels:
+    app: interviewx-backend
+spec:
+  type: ClusterIP
+  selector:
+    app: interviewx-backend
+  ports:
+    - port: 6000
+      targetPort: 6000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: interviewx-frontend
+  labels:
+    app: interviewx-frontend
+spec:
+  type: LoadBalancer
+  selector:
+    app: interviewx-frontend
+  ports:
+    - port: 80
+      targetPort: 80

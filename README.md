@@ -29,10 +29,20 @@ make run
 
 🔗 Live: https://skit-devops-2026.github.io/devops-24ESKCS104/
 
+## Backend (Render)
+
+🔗 Live backend: https://interviewx-backend-104.onrender.com
+
+The backend is deployed on Render (free plan, Docker service
+`interviewx-backend-104` from `render.yaml`). `GET /health` returns
+`{"status":"ok"}` and `GET /metrics` exposes Prometheus metrics.
+Note: the free plan sleeps when idle, so the first visit after a break
+can take ~30 seconds to wake up.
+
 ## Health endpoint
 
-`GET /health` returns the running commit SHA. See `Makefile` and the milestone
-sheet for why this is required.
+`GET /health` returns the service status and the running commit. See
+`Makefile` and the milestone sheet for why this is required.
 
 The backend also exposes Prometheus metrics at `GET /metrics`
 (`interviewx_uptime_seconds`, `interviewx_http_requests_total`,

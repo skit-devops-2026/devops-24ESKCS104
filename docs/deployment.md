@@ -7,6 +7,10 @@
 The frontend (React + Vite, in `client/`) is built by the CI
 `deploy-pages` job and deployed to GitHub Pages on every push to `main`.
 Repository Settings > Pages source must be set to **GitHub Actions**.
+Note: as of 2026-10-26, Pages is not yet enabled for this repo — neither
+the student accounts with push access have admin access to change that
+setting, so an org admin still needs to enable it before the URL above
+publishes.
 
 ## Run everything locally with Docker
 
@@ -50,11 +54,19 @@ kubectl apply -f k8s/service.yaml
 
 See `k8s/README.md` for the Deployments and Services.
 
-## Optional: Render backend
+## Render backend (live)
 
-`render.yaml` is a Blueprint for a free Render Docker service built from
-the root `Dockerfile`, with `/health` as its health-check path.
-It is optional — the graded deployment above is GitHub Pages.
+The backend is deployed on Render (free plan, Docker service
+`interviewx-backend-104` from `render.yaml`, built from the root
+`Dockerfile` with `/health` as its health-check path):
+
+- 🔗 Live backend: https://interviewx-backend-104.onrender.com
+- Health: https://interviewx-backend-104.onrender.com/health — returns `{"status":"ok"}`
+- Metrics: https://interviewx-backend-104.onrender.com/metrics
+
+The free plan sleeps when idle, so the first visit after a break can
+take ~30 seconds to wake up. The graded frontend deployment above is
+GitHub Pages; the Render backend is an additional live deployment.
 
 ## Deployment diagram
 

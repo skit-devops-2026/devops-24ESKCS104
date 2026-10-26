@@ -27,7 +27,7 @@ make run
 
 ## Live URL
 
-🔗 Live: https://skit-devops-2026.github.io/devops-24ESKCS104/
+🔗 Live: https://interviewx-frontend-104.onrender.com
 
 ## Backend (Render)
 

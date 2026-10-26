@@ -1,0 +1,12 @@
+# Render Blueprint — InterViewX backend (devops-24ESKCS104).
+# Optional: the graded deployment is GitHub Pages (see docs/deployment.md).
+services:
+  - type: web
+    name: interviewx-backend-104
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
